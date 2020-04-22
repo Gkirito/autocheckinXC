@@ -12,7 +12,7 @@
             path: "/dapi/v2/account/account_service/login",
             method: "POST",
             headers: {
-                "App-Code": "3", //这里是学校，根据id来
+                "App-Code": "X", //这里是学校，根据id来
                 "Content-Type": "application/json; charset=utf-8",
             },
         };
