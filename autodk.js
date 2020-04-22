@@ -94,7 +94,7 @@
                 callback(error);
             });
         request.write(
-            '{"bizType":"D00","groupid":"5e9f1880c1d56f0001da63a0","value":[{"location":["\\u6d59\\u6c5f\\u7701","\\u676d\\u5dde\\u5e02","\\u4e34\\u5b89\\u533a"],"whatColorIsYourHangzhouHealthCode":"greenCode","inWenzhouHuangyanWenlingOrPassOrContactPersonsFromTheAboveAreas":"no","inHubeiOrPassOrComeIntoContactWithPeopleFromHubei":"no","closeContactWithConfirmedOrSuspectedCases":"no","currentLifeSituation":"normalHome","currentHealthCondition":"beInGoodHealth"}]}'
+            '{"bizType":"","groupid":"","value":[{"location":["","",""],"whatColorIsYourHangzhouHealthCode":"greenCode","inWenzhouHuangyanWenlingOrPassOrContactPersonsFromTheAboveAreas":"no","inHubeiOrPassOrComeIntoContactWithPeopleFromHubei":"no","closeContactWithConfirmedOrSuspectedCases":"no","currentLifeSituation":"normalHome","currentHealthCondition":"beInGoodHealth"}]}'
         ); //这里的json如果不了解，建议网页上提交一次签到，拿到请求数据，直接复制过来用（注意格式和转码）
         request.end();
     }

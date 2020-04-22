@@ -18,7 +18,7 @@
            };
    ```
 
-   App-Code就是学校代码，编号来自网页版
+   `App-Code`就是学校代码，编号来自网页版，注意是填写`sid号`
 
    <img src="https://libget.com/gkirito/blog/image/2020/image-20200422131503489.png" alt="image-20200422131503489" style="zoom:50%;" />
 
@@ -36,16 +36,16 @@
 
    ``` js
    request.write(
-               '{"bizType":"",
-     							"groupid":"",
-     							"value":[{
-     								"location":["","",""],
-     							"whatColorIsYourHangzhouHealthCode":"greenCode",
-       "inWenzhouHuangyanWenlingOrPassOrContactPersonsFromTheAboveAreas":"no",
-         					"inHubeiOrPassOrComeIntoContactWithPeopleFromHubei":"no",
-           				"closeContactWithConfirmedOrSuspectedCases":"no",
-             			"currentLifeSituation":"normalHome",
-              			 "currentHealthCondition":"beInGoodHealth"}]}'
+               '{
+                "bizType":"",
+                "groupid":"",
+                "value":[{
+                   "location":["","",""],
+                   "whatColorIsYourHangzhouHealthCode":"greenCode","inWenzhouHuangyanWenlingOrPassOrContactPersonsFromTheAboveAreas":"no","inHubeiOrPassOrComeIntoContactWithPeopleFromHubei":"no","closeContactWithConfirmedOrSuspectedCases":"no",
+                   "currentLifeSituation":"normalHome",
+                   "currentHealthCondition":"beInGoodHealth"
+                   }]
+                }'
            ); //这里的json如果不了解，建议网页上提交一次签到，拿到请求数据，直接复制过来用（注意格式和转码）
            request.end();
    ```
