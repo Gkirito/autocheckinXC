@@ -195,19 +195,19 @@
             .on('error', (error) => {
                 callback(error);
             });
-        request.write("{\"themeId\":\"" + themeId + "\",\"date\":1587540486000}")
+        request.write("{\"themeId\":\"" + themeId + "\",\"date\":" + new Date().getTime() + "}")
         request.end();
 
 
     }
-    let job = schedule.scheduleJob("00 01 00 * * *", () => {
-        gettoken((callback) => {
-            token = callback;
-            getThemeId((themeid) => {
-                getGroupID(themeid, (groupid, bizType) => {
-                    autodk(groupid, bizType);
-                });
+    // let job = schedule.scheduleJob("00 01 00 * * *", () => {
+    gettoken((callback) => {
+        token = callback;
+        getThemeId((themeid) => {
+            getGroupID(themeid, (groupid, bizType) => {
+                autodk(groupid, bizType);
             });
         });
     });
+    // });
 })();
