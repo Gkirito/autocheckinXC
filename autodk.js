@@ -3,6 +3,14 @@
     "use strict";
     const schedule = require("node-schedule");
 
+    const appCode = ""; //这里是学校，根据sid来
+    const studentId = ""; //学号
+    const password = ""; //密码
+    const province = ""; //省（中文）
+    const city = ""; //市（中文）
+    const district = ""; //区（中文）
+    let token = "";
+
     function gettoken(callback) {
         const httpTransport = require("https");
         const responseEncoding = "utf8";
@@ -12,7 +20,7 @@
             path: "/dapi/v2/account/account_service/login",
             method: "POST",
             headers: {
-                "App-Code": "X", //这里是学校，根据id来
+                "App-Code": appCode,
                 "Content-Type": "application/json; charset=utf-8",
             },
         };
@@ -37,6 +45,7 @@
                             Buffer.concat(responseBufs).toString(responseEncoding) :
                             responseStr;
                         const obj = JSON.parse(responseStr);
+                        // console.log(obj);
                         callback(obj.data.token);
                     });
             })
@@ -45,12 +54,12 @@
                 callback(error);
             });
         request.write(
-            '{"loginName":"","password":"","type":"account"}' //账号密码，为了获取token
+            '{"loginName":"' + studentId + '","password":"' + password + '","type":"account"}'
         );
         request.end();
     }
     // request Request (2)
-    function autodk(token, callback) {
+    function autodk(groupid, bizType, callback) {
         "use strict";
 
         const httpTransport = require("https");
@@ -94,11 +103,111 @@
                 callback(error);
             });
         request.write(
-            '{"bizType":"","groupid":"","value":[{"location":["","",""],"whatColorIsYourHangzhouHealthCode":"greenCode","inWenzhouHuangyanWenlingOrPassOrContactPersonsFromTheAboveAreas":"no","inHubeiOrPassOrComeIntoContactWithPeopleFromHubei":"no","closeContactWithConfirmedOrSuspectedCases":"no","currentLifeSituation":"normalHome","currentHealthCondition":"beInGoodHealth"}]}'
-        ); //这里的json如果不了解，建议网页上提交一次签到，拿到请求数据，直接复制过来用（注意格式和转码）
+            '{"bizType":"' + bizType + '","groupid":"' + groupid + '","value":[{"location":["' + province + '","' + city + '","' + district + '"],"whatColorIsYourHangzhouHealthCode":"greenCode","inWenzhouHuangyanWenlingOrPassOrContactPersonsFromTheAboveAreas":"no","inHubeiOrPassOrComeIntoContactWithPeopleFromHubei":"no","closeContactWithConfirmedOrSuspectedCases":"no","currentLifeSituation":"normalHome","currentHealthCondition":"beInGoodHealth"}]}'
+        );
         request.end();
     }
+
+    function getThemeId(callback) {
+        'use strict';
+
+        const httpTransport = require('https');
+        const responseEncoding = 'utf8';
+        const httpOptions = {
+            hostname: 'pa.pkqa.com.cn',
+            port: '443',
+            path: '/dapi/v2/form/daily_check_in_service/find_all_valid_themes_with_self',
+            method: 'POST',
+            headers: {
+                "Authorization": "Bearer " + token,
+                "App-Code": appCode,
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        };
+        httpOptions.headers['User-Agent'] = 'node ' + process.version;
+
+        const request = httpTransport.request(httpOptions, (res) => {
+                let responseBufs = [];
+                let responseStr = '';
+
+                res.on('data', (chunk) => {
+                    if (Buffer.isBuffer(chunk)) {
+                        responseBufs.push(chunk);
+                    } else {
+                        responseStr = responseStr + chunk;
+                    }
+                }).on('end', () => {
+                    responseStr = responseBufs.length > 0 ?
+                        Buffer.concat(responseBufs).toString(responseEncoding) : responseStr;
+                    const obj = JSON.parse(responseStr);
+                    // console.log(obj.data[0].id);
+                    callback(obj.data[0].id);
+                });
+
+            })
+            .setTimeout(0)
+            .on('error', (error) => {
+                callback(error);
+            });
+        request.write("{}")
+        request.end();
+
+
+    }
+
+    function getGroupID(themeId, callback) {
+        'use strict';
+
+        const httpTransport = require('https');
+        const responseEncoding = 'utf8';
+        const httpOptions = {
+            hostname: 'pa.pkqa.com.cn',
+            port: '443',
+            path: '/dapi/v2/form/daily_check_in_service/find_item_by_theme_id_and_date_with_self',
+            method: 'POST',
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json; charset=utf-8"
+            }
+        };
+        httpOptions.headers['User-Agent'] = 'node ' + process.version;
+
+
+        const request = httpTransport.request(httpOptions, (res) => {
+                let responseBufs = [];
+                let responseStr = '';
+
+                res.on('data', (chunk) => {
+                    if (Buffer.isBuffer(chunk)) {
+                        responseBufs.push(chunk);
+                    } else {
+                        responseStr = responseStr + chunk;
+                    }
+                }).on('end', () => {
+                    responseStr = responseBufs.length > 0 ?
+                        Buffer.concat(responseBufs).toString(responseEncoding) : responseStr;
+                    const obj = JSON.parse(responseStr);
+                    callback(obj.data.group.id, obj.data.group.bizType);
+                });
+
+            })
+            .setTimeout(0)
+            .on('error', (error) => {
+                callback(error);
+            });
+        request.write("{\"themeId\":\"" + themeId + "\",\"date\":1587540486000}")
+        request.end();
+
+
+    }
     let job = schedule.scheduleJob("00 01 00 * * *", () => {
-        gettoken(autodk);
+        gettoken((callback) => {
+            token = callback;
+            getThemeId((themeid) => {
+                getGroupID(themeid, (groupid, bizType) => {
+                    autodk(groupid, bizType);
+                });
+            });
+        });
     });
 })();
