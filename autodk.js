@@ -200,14 +200,14 @@
 
 
     }
-    // let job = schedule.scheduleJob("00 01 00 * * *", () => {
-    gettoken((callback) => {
-        token = callback;
-        getThemeId((themeid) => {
-            getGroupID(themeid, (groupid, bizType) => {
-                autodk(groupid, bizType);
+    let job = schedule.scheduleJob("00 01 00 * * *", () => {
+        gettoken((callback) => {
+            token = callback;
+            getThemeId((themeid) => {
+                getGroupID(themeid, (groupid, bizType) => {
+                    autodk(groupid, bizType);
+                });
             });
         });
     });
-    // });
 })();
