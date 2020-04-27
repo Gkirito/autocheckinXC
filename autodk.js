@@ -60,7 +60,6 @@
     }
     // request Request (2)
     function autodk(groupid, bizType, callback) {
-        "use strict";
 
         const httpTransport = require("https");
         const responseEncoding = "utf8";
@@ -94,7 +93,7 @@
                             responseBufs.length > 0 ?
                             Buffer.concat(responseBufs).toString(responseEncoding) :
                             responseStr;
-                        console.log(new Date() + responseStr);
+                        console.log(studentId + " -> " + new Date() + " -> " + responseStr);
                         // callback(null, res.statusCode, res.headers, responseStr);
                     });
             })
@@ -103,13 +102,12 @@
                 callback(error);
             });
         request.write(
-            '{"bizType":"' + bizType + '","groupid":"' + groupid + '","value":[{"location":["' + province + '","' + city + '","' + district + '"],"whatColorIsYourHangzhouHealthCode":"greenCode","inWenzhouHuangyanWenlingOrPassOrContactPersonsFromTheAboveAreas":"no","inHubeiOrPassOrComeIntoContactWithPeopleFromHubei":"no","closeContactWithConfirmedOrSuspectedCases":"no","currentLifeSituation":"normalHome","currentHealthCondition":"beInGoodHealth"}]}'
+            '{"bizType":"' + bizType + '","groupid":"' + groupid + '","value":[{"location":["' + province + '","' + city + '","' + district + '"],"whatColorIsYourHangzhouHealthCode":"greenCode","inWenzhouHuangyanWenlingOrPassOrContactPersonsFromTheAboveAreas":"no","inHubeiOrPassOrComeIntoContactWithPeopleFromHubei":"no","closeContactWithConfirmedOrSuspectedCases":"no","currentLifeSituation":"normalHome","currentHealthCondition":"beInGoodHealth","whetheryouhavestayedinheilongjiang":"no"}]}'
         );
         request.end();
     }
 
     function getThemeId(callback) {
-        'use strict';
 
         const httpTransport = require('https');
         const responseEncoding = 'utf8';
@@ -156,7 +154,6 @@
     }
 
     function getGroupID(themeId, callback) {
-        'use strict';
 
         const httpTransport = require('https');
         const responseEncoding = 'utf8';
