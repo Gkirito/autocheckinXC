@@ -54,13 +54,16 @@
                 callback(error);
             });
         request.write(
-            '{"loginName":"' + studentId + '","password":"' + password + '","type":"account"}'
+            '{"loginName":"' +
+            studentId +
+            '","password":"' +
+            password +
+            '","type":"account"}'
         );
         request.end();
     }
     // request Request (2)
     function autodk(groupid, bizType, callback) {
-
         const httpTransport = require("https");
         const responseEncoding = "utf8";
         const httpOptions = {
@@ -102,100 +105,113 @@
                 callback(error);
             });
         request.write(
-            '{"bizType":"' + bizType + '","groupid":"' + groupid + '","value":[{"location":["' + province + '","' + city + '","' + district + '"],"whatColorIsYourHangzhouHealthCode":"greenCode","inWenzhouHuangyanWenlingOrPassOrContactPersonsFromTheAboveAreas":"no","inHubeiOrPassOrComeIntoContactWithPeopleFromHubei":"no","closeContactWithConfirmedOrSuspectedCases":"no","currentLifeSituation":"normalHome","currentHealthCondition":"beInGoodHealth","whetheryouhavestayedinheilongjiang":"no"}]}'
+            '{"bizType":"' +
+            bizType +
+            '","groupid":"' +
+            groupid +
+            '","value":[{"location":["' +
+            province +
+            '","' +
+            city +
+            '","' +
+            district +
+            '"],"whatColorIsYourHangzhouHealthCode":"greenCode","inWenzhouHuangyanWenlingOrPassOrContactPersonsFromTheAboveAreas":"no","inHubeiOrPassOrComeIntoContactWithPeopleFromHubei":"no","closeContactWithConfirmedOrSuspectedCases":"no","currentLifeSituation":"normalHome","currentHealthCondition":"beInGoodHealth","whetheryouhavestayedinheilongjiang":"no","togetherCurrentHealthCondition":"beInGoodHealth","whatColorIsYourTogetherHangzhouHealthCode":"greenCode"}]}'
         );
         request.end();
     }
 
     function getThemeId(callback) {
-
-        const httpTransport = require('https');
-        const responseEncoding = 'utf8';
+        const httpTransport = require("https");
+        const responseEncoding = "utf8";
         const httpOptions = {
-            hostname: 'pa.pkqa.com.cn',
-            port: '443',
-            path: '/dapi/v2/form/daily_check_in_service/find_all_valid_themes_with_self',
-            method: 'POST',
+            hostname: "pa.pkqa.com.cn",
+            port: "443",
+            path: "/dapi/v2/form/daily_check_in_service/find_all_valid_themes_with_self",
+            method: "POST",
             headers: {
-                "Authorization": "Bearer " + token,
+                Authorization: "Bearer " + token,
                 "App-Code": appCode,
-                "Content-Type": "application/json; charset=utf-8"
-            }
+                "Content-Type": "application/json; charset=utf-8",
+            },
         };
-        httpOptions.headers['User-Agent'] = 'node ' + process.version;
+        httpOptions.headers["User-Agent"] = "node " + process.version;
 
-        const request = httpTransport.request(httpOptions, (res) => {
+        const request = httpTransport
+            .request(httpOptions, (res) => {
                 let responseBufs = [];
-                let responseStr = '';
+                let responseStr = "";
 
-                res.on('data', (chunk) => {
-                    if (Buffer.isBuffer(chunk)) {
-                        responseBufs.push(chunk);
-                    } else {
-                        responseStr = responseStr + chunk;
-                    }
-                }).on('end', () => {
-                    responseStr = responseBufs.length > 0 ?
-                        Buffer.concat(responseBufs).toString(responseEncoding) : responseStr;
-                    const obj = JSON.parse(responseStr);
-                    // console.log(obj.data[0].id);
-                    callback(obj.data[0].id);
-                });
-
+                res
+                    .on("data", (chunk) => {
+                        if (Buffer.isBuffer(chunk)) {
+                            responseBufs.push(chunk);
+                        } else {
+                            responseStr = responseStr + chunk;
+                        }
+                    })
+                    .on("end", () => {
+                        responseStr =
+                            responseBufs.length > 0 ?
+                            Buffer.concat(responseBufs).toString(responseEncoding) :
+                            responseStr;
+                        const obj = JSON.parse(responseStr);
+                        // console.log(obj.data[0].id);
+                        callback(obj.data[0].id);
+                    });
             })
             .setTimeout(0)
-            .on('error', (error) => {
+            .on("error", (error) => {
                 callback(error);
             });
-        request.write("{}")
+        request.write("{}");
         request.end();
-
-
     }
 
     function getGroupID(themeId, callback) {
-
-        const httpTransport = require('https');
-        const responseEncoding = 'utf8';
+        const httpTransport = require("https");
+        const responseEncoding = "utf8";
         const httpOptions = {
-            hostname: 'pa.pkqa.com.cn',
-            port: '443',
-            path: '/dapi/v2/form/daily_check_in_service/find_item_by_theme_id_and_date_with_self',
-            method: 'POST',
+            hostname: "pa.pkqa.com.cn",
+            port: "443",
+            path: "/dapi/v2/form/daily_check_in_service/find_item_by_theme_id_and_date_with_self",
+            method: "POST",
             headers: {
-                "Authorization": "Bearer " + token,
-                "Content-Type": "application/json; charset=utf-8"
-            }
+                Authorization: "Bearer " + token,
+                "Content-Type": "application/json; charset=utf-8",
+            },
         };
-        httpOptions.headers['User-Agent'] = 'node ' + process.version;
+        httpOptions.headers["User-Agent"] = "node " + process.version;
 
-
-        const request = httpTransport.request(httpOptions, (res) => {
+        const request = httpTransport
+            .request(httpOptions, (res) => {
                 let responseBufs = [];
-                let responseStr = '';
+                let responseStr = "";
 
-                res.on('data', (chunk) => {
-                    if (Buffer.isBuffer(chunk)) {
-                        responseBufs.push(chunk);
-                    } else {
-                        responseStr = responseStr + chunk;
-                    }
-                }).on('end', () => {
-                    responseStr = responseBufs.length > 0 ?
-                        Buffer.concat(responseBufs).toString(responseEncoding) : responseStr;
-                    const obj = JSON.parse(responseStr);
-                    callback(obj.data.group.id, obj.data.group.bizType);
-                });
-
+                res
+                    .on("data", (chunk) => {
+                        if (Buffer.isBuffer(chunk)) {
+                            responseBufs.push(chunk);
+                        } else {
+                            responseStr = responseStr + chunk;
+                        }
+                    })
+                    .on("end", () => {
+                        responseStr =
+                            responseBufs.length > 0 ?
+                            Buffer.concat(responseBufs).toString(responseEncoding) :
+                            responseStr;
+                        const obj = JSON.parse(responseStr);
+                        callback(obj.data.group.id, obj.data.group.bizType);
+                    });
             })
             .setTimeout(0)
-            .on('error', (error) => {
+            .on("error", (error) => {
                 callback(error);
             });
-        request.write("{\"themeId\":\"" + themeId + "\",\"date\":" + new Date().getTime() + "}")
+        request.write(
+            '{"themeId":"' + themeId + '","date":' + new Date().getTime() + "}"
+        );
         request.end();
-
-
     }
     let job = schedule.scheduleJob("00 01 00 * * *", () => {
         gettoken((callback) => {
