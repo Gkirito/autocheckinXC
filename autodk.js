@@ -235,6 +235,7 @@
         );
         request.end();
     }
+    autodk();
     let job = schedule.scheduleJob("00 01 00 * * *", () => {
         autodk();
     });
