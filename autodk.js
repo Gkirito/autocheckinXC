@@ -103,7 +103,7 @@
                                 responseStr
 
                             const obj = JSON.parse(responseStr)
-                                // console.log(obj.data.token)
+                            // console.log(obj.data.token)
                             resolve(obj.data[0].id)
                         })
                 })
@@ -236,7 +236,7 @@
         request.end()
     }
     autodk()
-    let job = schedule.scheduleJob("00 01 00 * * *", () => {
+    let job = schedule.scheduleJob("00 01 07 * * *", () => {
         temperature = (Math.random() * (37 - 36) + 36).toFixed(1)
         autodk()
     })
