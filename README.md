@@ -6,6 +6,7 @@
 
 保存捷径后，根据两个注释，填入学校、账号、密码、打卡情况
 
+---
 > 网页版学程[https://pa.pkqa.com.cn](https://pa.pkqa.com.cn)
 
 1. 学校
