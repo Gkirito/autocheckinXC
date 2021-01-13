@@ -10,7 +10,7 @@
 	// const city = "" //市（中文）
 	// const district = "" //区（中文）
 	let token = ""
-	let temperature = (Math.random() * (37 - 36) + 36).toFixed(1)
+	// let temperature = (Math.random() * (37 - 36) + 36).toFixed(1)
 
 	async function gettoken() {
 		const httpTransport = require("https")
@@ -214,13 +214,17 @@
 			bizType +
 			'","groupid":"' +
 			groupid +
-			'","value":[{"whatColorIsYourHangzhouHealthCode":"greenCode",' +
-			'"everBeenToInAHighRiskArea":"no",' +
-			'"currentHealthCondition":"no",' +
-			'"temperature":"' +
-			temperature +
+			'","value":[{' +
+			'"whatColorIsYourHangzhouHealthCode": "greenCode", ' +
+			'"everBeenToInAHighRiskArea": "no",' +
+			'"areYouAtSchoolToday": "no",' +
+			'"ifAFever": "no",' + 
+			'"ifThereAreSymptoms": "no"' +
 			'"}]}'
 		)
+		// '"currentHealthCondition":"no",' +
+		// 	'"temperature":"' +
+		// 	temperature +
 		// request.write(
 		// 	'{"bizType":"' +
 		// 	bizType +
