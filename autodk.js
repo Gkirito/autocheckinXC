@@ -220,7 +220,7 @@
 			'"areYouAtSchoolToday": "no",' +
 			'"ifAFever": "no",' + 
 			'"ifThereAreSymptoms": "no"' +
-			'"}]}'
+			'}]}'
 		)
 		// '"currentHealthCondition":"no",' +
 		// 	'"temperature":"' +

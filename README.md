@@ -2,7 +2,7 @@
 学程自动打卡脚本
 
 ### Apple设备可以使用以下捷径，直接在自己的手机或者iPad上创建自动化，无需电脑或者服务器部署
-[https://www.icloud.com/shortcuts/73a1887c7ada42d8b50a7973e3082d59](https://www.icloud.com/shortcuts/73a1887c7ada42d8b50a7973e3082d59)
+[https://www.icloud.com/shortcuts/5136552c5cc84aa187774701aaa2d480](https://www.icloud.com/shortcuts/5136552c5cc84aa187774701aaa2d480)
 
 保存捷径后，根据两个注释，填入学校、账号、密码、打卡情况
 
